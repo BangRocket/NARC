@@ -76,14 +76,12 @@ endif()
 add_library(narc_game STATIC
     game/src/g_game.c
     game/src/g_player.c
-    game/src/g_entities.c
-    game/src/g_weapons.c
+    game/src/g_entity.c
+    game/src/g_weapon.c
     game/src/g_raycaster.c
-    game/src/g_pathfinding.c
+    game/src/g_pathfind.c
     game/src/g_level.c
-    game/src/g_menu.c
-    game/src/g_hud.c
-    game/src/g_config.c
+    game/src/g_main.c
 )
 
 target_include_directories(narc_game PUBLIC

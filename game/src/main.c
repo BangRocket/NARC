@@ -1,4 +1,4 @@
-#include "../include/g_game.h"
+#include "../include/g_main.h"
 #include "../../engine/include/i_system.h"
 #include "../../engine/include/i_video.h"
 #include "../../engine/include/i_input.h"
@@ -50,6 +50,22 @@ int main(int argc, char* argv[]) {
         return 1;
     }
     
+    game_context_t* gameContext = G_CreateGameContext();
+    if (!gameContext) {
+        I_Error("Failed to create game context");
+        return 1;
+    }
+    
+    if (!G_InitializeGameContext(gameContext, &gameConfig)) {
+        I_Error("Failed to initialize game context");
+        return 1;
+    }
+    
+    if (!G_LoadGameLevel(gameContext, 1)) {
+        I_Error("Failed to load first level");
+        return 1;
+    }
+    
     I_Log("Starting main game loop");
     
     while (!I_ShouldClose()) {
@@ -58,13 +74,18 @@ int main(int argc, char* argv[]) {
         G_ProcessInput();
         G_RunFrame();
         
+        float deltaTime = I_GetDeltaTime();
+        G_UpdateGameContext(gameContext, deltaTime);
+        
         I_BeginDrawing();
         G_Draw();
+        G_RenderGameContext(gameContext);
         I_EndDrawing();
     }
     
     I_Log("Shutting down");
     
+    G_DestroyGameContext(gameContext);
     G_Shutdown();
     I_ShutdownAudio();
     I_ShutdownInput();
