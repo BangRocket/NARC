@@ -25,9 +25,13 @@ void I_Init(void) {
         fprintf(logFile, "Using raylib %s\n", RAYLIB_VERSION);
         fflush(logFile);
     }
+    
+    I_PlatformInit();
 }
 
 void I_Shutdown(void) {
+    I_PlatformShutdown();
+    
     if (logFile) {
         fprintf(logFile, "NARC Engine Shutdown\n");
         fclose(logFile);

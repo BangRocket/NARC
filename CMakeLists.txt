@@ -31,6 +31,7 @@ endif()
 # Engine library
 add_library(narc_engine STATIC
     engine/src/system/i_system.c
+    engine/src/system/i_config.c
     engine/src/renderer/i_video.c
     engine/src/renderer/i_renderer.c
     engine/src/input/i_input.c
